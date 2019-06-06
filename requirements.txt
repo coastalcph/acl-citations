@@ -1,0 +1,8 @@
+better_exceptions
+black
+docopt
+gitpython
+logzero
+lxml
+requests
+tqdm
