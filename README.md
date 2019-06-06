@@ -33,6 +33,7 @@
 3. Run the PDFs through GROBID:
 
    `mkdir -p tei/N18`
+
    `python grobid-client-python/grobid-client.py --input pdf/N18 --output tei/N18 --config config.json processReferences`
 
 4. Extract the citation years from the TEI files:
