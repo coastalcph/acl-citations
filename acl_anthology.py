@@ -13,6 +13,7 @@ Arguments:
                            may contain ? and * wildcards.
 
 Options:
+  -d, --destination DIR    Directory to save files to [default: {SCRIPTDIR}/pdf].
   --debug                  Verbose log messages.
   -h, --help               Display this helpful text.
 """
@@ -97,10 +98,10 @@ def match_ids(ids):
     return matched
 
 
-def check_ids(ids, force=False):
+def check_ids(ids, destdir, force=False):
     checked = []
     for full_id, url in ids:
-        local_file = f"{SCRIPTDIR}/pdf/{full_id[:3]}/{full_id}.pdf"
+        local_file = f"{destdir}/{full_id[:3]}/{full_id}.pdf"
         if not force and os.path.exists(local_file):
             continue
         if not os.path.exists(os.path.dirname(local_file)):
@@ -145,6 +146,9 @@ if __name__ == "__main__":
     if args["match"] or args["fetch"]:
         entries = match_ids(args["<expr>"])
     if args["fetch"]:
-        entries = check_ids(entries)
+        destdir = args["--destination"]
+        if "{SCRIPTDIR}" in destdir:
+            destdir = destdir.replace("{SCRIPTDIR}", SCRIPTDIR)
+        entries = check_ids(entries, destdir)
         if entries:
             download_ids(entries)
