@@ -4,5 +4,11 @@ docopt
 gitpython
 logzero
 lxml
+matplotlib
+numpy
+pandas
+researchpy
 requests
+seaborn
+statsmodels
 tqdm
