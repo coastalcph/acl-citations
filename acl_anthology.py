@@ -83,16 +83,19 @@ def match_ids(ids):
             continue
         log.debug(f"Parsing file: {xmlfile}")
         tree = etree.parse(xmlfile)
-        for paper in tree.getroot():
-            full_id = f"{prefix}-{paper.get('id')}"
-            if id_pattern.match(full_id) is None:
-                continue
-            log.debug(f"Matched: {full_id}")
-            if "href" in paper.attrib:
-                url = paper.get("href")
-            else:
-                url = ANTHOLOGY_URL.format(full_id)
-            matched.append((full_id, url))
+        for volume in tree.getroot().findall('.//volume'):
+            volume_id = volume.get("id")
+            for paper in volume.findall('.//paper'):
+                paper_id = paper.get("id")
+                full_id = f"{prefix}-{volume_id}" + \
+                    ("0" * (4 - len(volume_id) - len(paper_id))) + paper_id
+                if id_pattern.match(full_id) is None:
+                    continue
+                log.debug(f"Matched: {full_id}")
+                url = paper.findtext('url')
+                if not url.startswith("http"):
+                    url = ANTHOLOGY_URL.format(full_id)
+                matched.append((full_id, url))
 
     log.info(f"Found {len(matched)} matching {'entry' if len(matched)==1 else 'entries'}.")
     return matched
