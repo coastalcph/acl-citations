@@ -14,6 +14,7 @@ Arguments:
 
 Options:
   -d, --destination DIR    Directory to save files to [default: {SCRIPTDIR}/pdf].
+  -n, --dry-run            Don't download files.
   --debug                  Verbose log messages.
   -h, --help               Display this helpful text.
 """
@@ -128,9 +129,20 @@ def download_ids(ids):
             progress.write(f"{url} is not a PDF file")
             progress.update()
             continue
-        r = requests.get(url, allow_redirects=True)
-        with open(local_file, 'wb') as f:
-            f.write(r.content)
+        for _ in range(5):
+            try:
+                r = requests.get(url, allow_redirects=True)
+            except Exception as e:
+                tqdm.write(f"{full_id}: GET caused exception '{str(e)}'")
+                continue
+            if r.status_code == requests.codes.ok:
+                with open(local_file, 'wb') as f:
+                    f.write(r.content)
+                break
+            else:
+                tqdm.write(f"{full_id}: received HTTP status {r.status_code}")
+        else:
+            tqdm.write(f"{full_id}: giving up")
         progress.update()
         if (i+1) % 50 == 0:
             tqdm.write(f"Downloaded {i+1:4d} files -- pausing for 10 seconds")
@@ -153,5 +165,5 @@ if __name__ == "__main__":
         if "{SCRIPTDIR}" in destdir:
             destdir = destdir.replace("{SCRIPTDIR}", SCRIPTDIR)
         entries = check_ids(entries, destdir)
-        if entries:
+        if entries and not args["--dry-run"]:
             download_ids(entries)

@@ -38,8 +38,8 @@ if __name__ == "__main__":
     # All papers from 1980--2018
     for year in range(1980, 2019):
         year_suffix = str(year)[-2:]
-        # All "ACL" and "CL" papers
-        idlist = (f"P{year_suffix}-*", f"J{year_suffix}-*")
+        # Everything All "ACL" and "CL" papers
+        idlist = (f"?{year_suffix}-*",)
         counts[year] = len(match_ids(idlist))
 
     with open(args["--csv"], 'w', newline='') as csvfile:
