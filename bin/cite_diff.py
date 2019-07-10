@@ -50,10 +50,10 @@ if __name__ == "__main__":
 
     for key in all_keys:
         if key not in a:
-            print(f"{key}\t--\t{','.join(b[key])}")
+            print(f"{key}\tN/A\t{','.join(b[key])}")
             continue
         if key not in b:
-            print(f"{key}\t{','.join(a[key])}\t--")
+            print(f"{key}\t{','.join(a[key])}\tN/A")
             continue
         if a[key] == b[key]:
             continue

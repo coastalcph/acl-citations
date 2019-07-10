@@ -136,7 +136,7 @@ if __name__ == "__main__":
         if dir_diff > 0:
             s_entries = "entries" if dir_diff > 1 else "entry"
             s_dirname = os.path.basename(dirname)
-            log.error(f"{s_dirname}: Could not parse dates for {dir_diff} {s_entries} in {dir_files}/{total_files} files")
+            log.warning(f"{s_dirname}: Could not parse dates for {dir_diff} {s_entries} in {dir_files}/{total_files} files")
 
     cited_count = sum(len(l) for l in cited_years.values())
     log.info(f"Found {cited_count} references with year.")
