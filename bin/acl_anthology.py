@@ -123,30 +123,36 @@ def download_ids(ids):
     progress = tqdm(total=len(entries), unit="files")
     for i, (full_id, url, local_file) in enumerate(entries):
         progress.set_description_str(f"{full_id} ")
-        h = requests.head(url, allow_redirects=True)
-        content_type = h.headers.get('content-type')
-        if 'pdf' not in content_type.lower():
-            progress.write(f"{url} is not a PDF file")
-            progress.update()
-            continue
         for _ in range(5):
             try:
-                r = requests.get(url, allow_redirects=True)
+                h = requests.head(url, allow_redirects=True)
             except Exception as e:
-                tqdm.write(f"{full_id}: GET caused exception '{str(e)}'")
+                progress.write(f"{full_id}: HEAD caused exception '{str(e)}'")
+                time.sleep(5)
                 continue
-            if r.status_code == requests.codes.ok:
-                with open(local_file, 'wb') as f:
-                    f.write(r.content)
+            content_type = h.headers.get('content-type')
+            if 'pdf' not in content_type.lower():
+                progress.write(f"{url} is not a PDF file (got: {content_type})")
                 break
             else:
-                tqdm.write(f"{full_id}: received HTTP status {r.status_code}")
+                try:
+                    r = requests.get(url, allow_redirects=True)
+                except Exception as e:
+                    progress.write(f"{full_id}: GET caused exception '{str(e)}'")
+                    time.sleep(5)
+                    continue
+                if r.status_code == requests.codes.ok:
+                    with open(local_file, 'wb') as f:
+                        f.write(r.content)
+                    break
+                else:
+                    progress.write(f"{full_id}: received HTTP status {r.status_code}")
         else:
-            tqdm.write(f"{full_id}: giving up")
+            progress.write(f"{full_id}: giving up")
         progress.update()
-        if (i+1) % 50 == 0:
-            tqdm.write(f"Downloaded {i+1:4d} files -- pausing for 10 seconds")
-            time.sleep(10)
+        #if (i+1) % 50 == 0:
+        #    tqdm.write(f"Downloaded {i+1:4d} files -- pausing for 10 seconds")
+        #    time.sleep(10)
     progress.close()
 
 
