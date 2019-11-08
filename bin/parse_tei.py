@@ -13,6 +13,7 @@ Arguments:
 Options:
   --csv <csvfile>           File to write citation data to.
   -f, --format <format>     XML format; one of: grobid,parscit [default: grobid].
+  --log <logfile>           Write log output to this file.
   --debug                   Verbose log messages.
   -h, --help                Display this helpful text.
 """
@@ -107,6 +108,13 @@ if __name__ == "__main__":
     log_level = logging.DEBUG if args["--debug"] else logging.INFO
     logzero.loglevel(log_level)
     logzero.formatter(logzero.LogFormatter(datefmt="%Y-%m-%d %H:%M:%S"))
+
+    if args["--log"]:
+        logzero.logfile(
+            args["--log"],
+            encoding="utf-8",
+            formatter=logzero.LogFormatter(datefmt="%Y-%m-%d %H:%M:%S", color=False)
+        )
 
     if args["--format"] == "grobid":
         parse_file = parse_tei_file
