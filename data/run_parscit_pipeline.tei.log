@@ -1,0 +1,125 @@
+[E 2019-11-08 22:04:02 parse_tei:89] D10-1000.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:03 parse_tei:89] D10-1085.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:03 parse_tei:147] D10: Could not parse dates for 84 entries in 51/126 files
+[E 2019-11-08 22:04:04 parse_tei:89] D11-1046.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:04 parse_tei:147] D11: Could not parse dates for 136 entries in 75/150 files
+[W 2019-11-08 22:04:05 parse_tei:147] D12: Could not parse dates for 137 entries in 77/139 files
+[W 2019-11-08 22:04:07 parse_tei:147] D13: Could not parse dates for 197 entries in 111/205 files
+[E 2019-11-08 22:04:07 parse_tei:89] D14-1001.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:08 parse_tei:89] D14-1078.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:09 parse_tei:147] D14: Could not parse dates for 297 entries in 150/225 files
+[E 2019-11-08 22:04:10 parse_tei:89] D15-1192.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:11 parse_tei:147] D15: Could not parse dates for 446 entries in 219/311 files
+[E 2019-11-08 22:04:11 parse_tei:89] D16-1000.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:13 parse_tei:147] D16: Could not parse dates for 399 entries in 181/264 files
+[W 2019-11-08 22:04:15 parse_tei:147] D17: Could not parse dates for 888 entries in 267/322 files
+[E 2019-11-08 22:04:16 parse_tei:89] D18-1031.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:17 parse_tei:89] D18-1232.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:19 parse_tei:89] D18-1506.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:20 parse_tei:89] D18-1526.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:20 parse_tei:147] D18: Could not parse dates for 1256 entries in 432/540 files
+[E 2019-11-08 22:04:20 parse_tei:89] D19-1078.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:22 parse_tei:89] D19-1279.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:23 parse_tei:89] D19-1423.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:23 parse_tei:89] D19-1489.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:25 parse_tei:147] D19: Could not parse dates for 1768 entries in 575/670 files
+[E 2019-11-08 22:04:25 parse_tei:89] E12-1001.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:25 parse_tei:89] E12-1040.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:25 parse_tei:89] E12-1061.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:26 parse_tei:147] E12: Could not parse dates for 91 entries in 46/85 files
+[E 2019-11-08 22:04:26 parse_tei:89] E14-1000.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:26 parse_tei:89] E14-4000.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:26 parse_tei:147] E14: Could not parse dates for 123 entries in 67/126 files
+[W 2019-11-08 22:04:28 parse_tei:147] E17: Could not parse dates for 548 entries in 199/239 files
+[E 2019-11-08 22:04:28 parse_tei:89] J10-1008.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:28 parse_tei:89] J10-2006.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:29 parse_tei:89] J10-4008.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:29 parse_tei:89] J10-4014.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:29 parse_tei:89] J10-4018.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:29 parse_tei:89] J10-4019.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:29 parse_tei:147] J10: Could not parse dates for 77 entries in 23/46 files
+[E 2019-11-08 22:04:29 parse_tei:89] J11-1010.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:29 parse_tei:89] J11-1011.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:29 parse_tei:89] J11-2006.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:29 parse_tei:89] J11-3006.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:29 parse_tei:89] J11-3010.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:29 parse_tei:89] J11-3011.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:29 parse_tei:89] J11-3012.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:29 parse_tei:147] J11: Could not parse dates for 100 entries in 26/47 files
+[E 2019-11-08 22:04:29 parse_tei:89] J12-2007.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:29 parse_tei:89] J12-2008.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:29 parse_tei:89] J12-2013.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:29 parse_tei:89] J12-3010.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:30 parse_tei:89] J12-4009.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:30 parse_tei:147] J12: Could not parse dates for 89 entries in 24/40 files
+[E 2019-11-08 22:04:30 parse_tei:89] J13-2008.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:30 parse_tei:89] J13-2009.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:30 parse_tei:89] J13-4010.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:30 parse_tei:147] J13: Could not parse dates for 163 entries in 30/38 files
+[E 2019-11-08 22:04:30 parse_tei:89] J14-1008.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:30 parse_tei:89] J14-2009.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:30 parse_tei:89] J14-4001.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:30 parse_tei:147] J14: Could not parse dates for 148 entries in 27/37 files
+[E 2019-11-08 22:04:30 parse_tei:89] J15-1006.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:30 parse_tei:89] J15-1008.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:31 parse_tei:89] J15-4005.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:31 parse_tei:89] J15-4008.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:31 parse_tei:147] J15: Could not parse dates for 83 entries in 21/32 files
+[E 2019-11-08 22:04:31 parse_tei:89] J16-2007.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:31 parse_tei:89] J16-3008.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:31 parse_tei:89] J16-4010.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:31 parse_tei:89] J16-4012.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:31 parse_tei:89] J16-4013.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:31 parse_tei:147] J16: Could not parse dates for 172 entries in 26/32 files
+[E 2019-11-08 22:04:31 parse_tei:89] J17-1008.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:31 parse_tei:89] J17-2007.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:31 parse_tei:89] J17-4008.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:31 parse_tei:147] J17: Could not parse dates for 201 entries in 22/29 files
+[E 2019-11-08 22:04:31 parse_tei:89] J18-1008.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:31 parse_tei:89] J18-2006.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:32 parse_tei:89] J18-4013.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:32 parse_tei:147] J18: Could not parse dates for 150 entries in 27/35 files
+[W 2019-11-08 22:04:32 parse_tei:147] J19: Could not parse dates for 58 entries in 5/5 files
+[E 2019-11-08 22:04:33 parse_tei:89] N10-1114.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:33 parse_tei:147] N10: Could not parse dates for 50 entries in 38/146 files
+[W 2019-11-08 22:04:34 parse_tei:147] N12: Could not parse dates for 61 entries in 45/97 files
+[W 2019-11-08 22:04:35 parse_tei:147] N13: Could not parse dates for 120 entries in 71/140 files
+[W 2019-11-08 22:04:36 parse_tei:147] N15: Could not parse dates for 204 entries in 110/186 files
+[W 2019-11-08 22:04:37 parse_tei:147] N16: Could not parse dates for 286 entries in 116/182 files
+[E 2019-11-08 22:04:39 parse_tei:89] N18-2000.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:39 parse_tei:89] N18-2016.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:40 parse_tei:147] N18: Could not parse dates for 1150 entries in 271/327 files
+[E 2019-11-08 22:04:41 parse_tei:89] N19-1095.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:43 parse_tei:89] N19-1348.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:43 parse_tei:147] N19: Could not parse dates for 1119 entries in 351/421 files
+[E 2019-11-08 22:04:43 parse_tei:89] P10-1000.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:45 parse_tei:89] P10-2000.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:45 parse_tei:147] P10: Could not parse dates for 157 entries in 96/231 files
+[E 2019-11-08 22:04:45 parse_tei:89] P11-1000.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:46 parse_tei:89] P11-2000.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:47 parse_tei:147] P11: Could not parse dates for 214 entries in 132/294 files
+[W 2019-11-08 22:04:47 parse_tei:147] P12: Could not parse dates for 132 entries in 86/189 files
+[W 2019-11-08 22:04:48 parse_tei:147] P13: Could not parse dates for 328 entries in 181/327 files
+[E 2019-11-08 22:04:48 parse_tei:89] P14-1000.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:48 parse_tei:147] P14: Could not parse dates for 340 entries in 182/288 files
+[W 2019-11-08 22:04:48 parse_tei:147] P15: Could not parse dates for 447 entries in 214/316 files
+[W 2019-11-08 22:04:48 parse_tei:147] P16: Could not parse dates for 556 entries in 240/330 files
+[E 2019-11-08 22:04:48 parse_tei:89] P17-1000.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:48 parse_tei:89] P17-2000.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:48 parse_tei:147] P17: Could not parse dates for 1656 entries in 265/304 files
+[W 2019-11-08 22:04:49 parse_tei:147] P18: Could not parse dates for 1284 entries in 330/382 files
+[E 2019-11-08 22:04:49 parse_tei:89] P19-1082.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:49 parse_tei:89] P19-1156.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:49 parse_tei:89] P19-1338.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:49 parse_tei:89] P19-1347.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:49 parse_tei:89] P19-1442.xml: Could not find any bibliography dates
+[E 2019-11-08 22:04:49 parse_tei:89] P19-1566.xml: Could not find any bibliography dates
+[W 2019-11-08 22:04:49 parse_tei:147] P19: Could not parse dates for 1875 entries in 555/653 files
+[W 2019-11-08 22:04:49 parse_tei:147] Q13: Could not parse dates for 41 entries in 18/35 files
+[W 2019-11-08 22:04:49 parse_tei:147] Q14: Could not parse dates for 61 entries in 30/43 files
+[W 2019-11-08 22:04:49 parse_tei:147] Q15: Could not parse dates for 85 entries in 32/42 files
+[W 2019-11-08 22:04:49 parse_tei:147] Q16: Could not parse dates for 74 entries in 28/39 files
+[W 2019-11-08 22:04:49 parse_tei:147] Q17: Could not parse dates for 100 entries in 28/37 files
+[W 2019-11-08 22:04:49 parse_tei:147] Q18: Could not parse dates for 153 entries in 42/47 files
+[W 2019-11-08 22:04:49 parse_tei:147] Q19: Could not parse dates for 126 entries in 28/29 files
+[I 2019-11-08 22:04:49 parse_tei:150] Found 267545 references with year.
