@@ -1,6 +1,7 @@
 better_exceptions
 black
 docopt
+fuzzywuzzy[speedup]
 gitpython
 logzero
 lxml
