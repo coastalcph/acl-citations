@@ -11,6 +11,7 @@ Arguments:
   <csvfile>                 CSV file to read from.
 
 Options:
+  -r, --ratio NUM           Maximum allowed score for fuzzy matching. [default: 90]
   --debug                   Verbose log messages.
   -h, --help                Display this helpful text.
 """
@@ -27,7 +28,8 @@ import os
 
 from fuzzywuzzy import fuzz
 
-
+global FUZZRATIO
+FUZZRATIO = 90
 SCRIPTDIR = os.path.dirname(os.path.realpath(__file__))
 
 
@@ -52,7 +54,7 @@ def check_authors(a_list, b_list):
     lower_first = lambda l: tuple(x[0].lower() for x in l)
     lower_last = lambda l: tuple(x[1].lower() for x in l)
     for a_last, b_last in zip(lower_last(a_list), lower_last(b_list)):
-        if a_last != b_last and fuzz.ratio(a_last, b_last) <= 90:
+        if a_last != b_last and fuzz.ratio(a_last, b_last) <= FUZZRATIO:
             return False
     for a_first, b_first in zip(lower_first(a_list), lower_first(b_list)):
         if not a_first or not b_first:
@@ -60,7 +62,7 @@ def check_authors(a_list, b_list):
         if (
             a_first != b_first
             and a_first[0] != b_first[0]
-            and fuzz.ratio(a_first, b_first) <= 90
+            and fuzz.ratio(a_first, b_first) <= FUZZRATIO
         ):
             return False
     # log.debug(f'fuzzy-matched authors "{authors_to_str(a_list)}" and "{authors_to_str(b_list)}"')
@@ -71,7 +73,7 @@ def check_title(a_title, b_title):
     # titles are already lower-cased
     if a_title == b_title:
         return True
-    if fuzz.ratio(a_title, b_title) > 90:
+    if fuzz.ratio(a_title, b_title) > FUZZRATIO:
         # log.debug(f'fuzzy-matched titles "{a_title}" and "{b_title}"')
         return True
     return False
@@ -133,6 +135,8 @@ if __name__ == "__main__":
     with open(args["<csvfile>"], "r", newline="") as csvfile:
         reader = csv.reader(csvfile, delimiter="\t", quotechar="|")
         data = [row for row in reader]
+
+    FUZZRATIO = int(args["--ratio"])
 
     matched = match_data(data)
     output = []
