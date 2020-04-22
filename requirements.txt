@@ -8,6 +8,7 @@ lxml
 matplotlib
 numpy
 pandas
+python-slugify
 researchpy
 requests
 seaborn

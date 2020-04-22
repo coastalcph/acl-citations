@@ -11,33 +11,38 @@ Arguments:
   <csvfile>                 CSV file to read from.
 
 Options:
-  -r, --ratio NUM           Maximum allowed score for fuzzy matching. [default: 90]
+  -r, --ratio NUM           Maximum allowed score for fuzzy matching. [default: 95]
   --debug                   Verbose log messages.
   -h, --help                Display this helpful text.
 """
 
-from collections import defaultdict
+from collections import defaultdict, Counter
 from docopt import docopt
 import better_exceptions
 import csv
+from fuzzywuzzy import fuzz
 import logging
 import logzero
 from logzero import logger as log
+from slugify import slugify
 import string
+from tqdm import tqdm
 import os
 
-from fuzzywuzzy import fuzz
 
 global FUZZRATIO
-FUZZRATIO = 90
+FUZZRATIO = 95
 SCRIPTDIR = os.path.dirname(os.path.realpath(__file__))
+
+global counters
+counters = Counter()
 
 
 def parse_author_string(s):
     authors = []
     for author_str in s.split(", "):
         elems = author_str.split(" ")
-        authors.append((" ".join(elems[:-1]), elems[-1]))
+        authors.append((slugify("".join(elems[:-1])), slugify(elems[-1])))
     return authors
 
 
@@ -65,8 +70,21 @@ def check_authors(a_list, b_list):
             and fuzz.ratio(a_first, b_first) <= FUZZRATIO
         ):
             return False
+    counters["authors-matched"] += 1
     # log.debug(f'fuzzy-matched authors "{authors_to_str(a_list)}" and "{authors_to_str(b_list)}"')
     return True
+
+
+def clean_title(title):
+    title = title.lower()
+    # everything after the first period is more likely to be noise (e.g.,
+    # journal/proceedings info parsed as part of the title) than not
+    if ". " in title:
+        idx = title.index(". ")
+        title = title[:idx]
+    if title.endswith("."):
+        title = title[:-1]
+    return slugify(title)
 
 
 def check_title(a_title, b_title):
@@ -74,25 +92,25 @@ def check_title(a_title, b_title):
     if a_title == b_title:
         return True
     if fuzz.ratio(a_title, b_title) > FUZZRATIO:
+        counters["title-matched"] += 1
         # log.debug(f'fuzzy-matched titles "{a_title}" and "{b_title}"')
         return True
     return False
 
 
-def match_within_year(data):
+def match_within_year(data, progress):
     by_id = {}  # new_id -> list of rows referring to the same paper
     next_id = 1
 
     for row in data:
         acl_id, _, author_string, title = row
         authors = parse_author_string(author_string)
-        row[2] = authors
-        title = title.lower()
+        title = clean_title(title)
+        row.extend([authors, title])
 
         # try to match up with all entries in by_id
         for new_id, entries in by_id.items():
-            _, _, c_authors, c_title = entries[0]
-            c_title = c_title.lower()
+            *_, c_authors, c_title = entries[0]
             # the easiest case: perfect match
             if authors == c_authors and title == c_title:
                 by_id[new_id].append(row)
@@ -109,7 +127,32 @@ def match_within_year(data):
             by_id[next_id] = [row]
             next_id += 1
 
+        progress.update(1)
+
     return by_id
+
+
+def match_across_years(year_a, year_b):
+    # find papers with identical authors+titles published in adjacent years, as
+    # this often happens when there's an arXiv paper in year Y and a
+    # peer-reviewed publication in year Y+1, and people cite either one
+    merged = []
+    for id_a, entries_a in year_a.items():
+        *_, authors_a, title_a = entries_a[0]
+
+        for id_b, entries_b in year_b.items():
+            *_, authors_b, title_b = entries_b[0]
+            if authors_a == authors_b and title_a == title_b:
+                counters["cross-year-merge"] += 1
+                # log.debug(f"Cross-year match:  {id_a} == {id_b}")
+                # log.debug(f" --- A: {entries_a[0][1]}. {entries_a[0][2]}. {entries_a[0][3]}")
+                # log.debug(f" --- B: {entries_b[0][1]}. {entries_b[0][2]}. {entries_b[0][3]}")
+                entries_a.extend(entries_b)
+                entries_a[0][1] = "/".join((str(entries_a[0][1]), str(entries_b[0][1])))
+                merged.append(id_b)
+                break
+
+    return merged
 
 
 def match_data(data):
@@ -119,8 +162,20 @@ def match_data(data):
         data_by_year[row[1]].append(row)
 
     by_year_id = {}
+    progress = tqdm(total=len(data))
     for year, rows in data_by_year.items():
-        by_year_id[year] = match_within_year(rows)
+        by_year_id[year] = match_within_year(rows, progress)
+    progress.close()
+
+    all_years = sorted(list(by_year_id.keys()))
+    def pairwise(a):
+        return list(zip(a[:-1], a[1:]))
+    for year_a, year_b in tqdm(pairwise(all_years)):
+        if int(year_a) + 1 != int(year_b):
+            continue  # only years immediately following each other
+        merged_b = match_across_years(by_year_id[year_a], by_year_id[year_b])
+        for id_b in merged_b:
+            del by_year_id[year_b][id_b]
 
     return by_year_id
 
@@ -137,11 +192,13 @@ if __name__ == "__main__":
         data = [row for row in reader]
 
     FUZZRATIO = int(args["--ratio"])
+    min_match = 5
 
     matched = match_data(data)
     output = []
 
-    min_match = 5
+    for name, count in counters.items():
+        log.info(f"Counter({name}) = {count}")
 
     # output only rows that are matched at least N times
     for year, by_id in matched.items():
@@ -149,13 +206,18 @@ if __name__ == "__main__":
             if len(entries) < min_match:
                 continue
             row = [
-                f"{year}-{new_id:03d}",
+                f"{year}-{new_id:04d}",
                 str(len(entries)),
-                authors_to_str(entries[0][2]),
+                str(entries[0][1]),
+                entries[0][2],
+                #authors_to_str(entries[0][4]),
                 entries[0][3],
+                #entries[0][5],
                 ",".join(e[0] for e in entries),
             ]
             output.append(row)
 
+    header = ("id", "num_cited", "year", "authors", "title", "citing_papers")
+    print("\t".join(header))
     for row in output:
         print("\t".join(row))
