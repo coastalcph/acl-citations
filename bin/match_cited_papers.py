@@ -11,6 +11,7 @@ Arguments:
   <csvfile>                 CSV file to read from.
 
 Options:
+  -j, --join-across-years   Join matching papers from subsequent years.
   -r, --ratio NUM           Maximum allowed score for fuzzy matching. [default: 95]
   --debug                   Verbose log messages.
   -h, --help                Display this helpful text.
@@ -167,16 +168,6 @@ def match_data(data):
         by_year_id[year] = match_within_year(rows, progress)
     progress.close()
 
-    all_years = sorted(list(by_year_id.keys()))
-    def pairwise(a):
-        return list(zip(a[:-1], a[1:]))
-    for year_a, year_b in tqdm(pairwise(all_years)):
-        if int(year_a) + 1 != int(year_b):
-            continue  # only years immediately following each other
-        merged_b = match_across_years(by_year_id[year_a], by_year_id[year_b])
-        for id_b in merged_b:
-            del by_year_id[year_b][id_b]
-
     return by_year_id
 
 
@@ -192,9 +183,21 @@ if __name__ == "__main__":
         data = [row for row in reader]
 
     FUZZRATIO = int(args["--ratio"])
-    min_match = 5
+    min_match = 1
 
     matched = match_data(data)
+
+    if args["--join-across-years"]:
+        all_years = sorted(list(matched.keys()))
+        def pairwise(a):
+            return list(zip(a[:-1], a[1:]))
+        for year_a, year_b in tqdm(pairwise(all_years)):
+            if int(year_a) + 1 != int(year_b):
+                continue  # only years immediately following each other
+            merged_b = match_across_years(matched[year_a], matched[year_b])
+            for id_b in merged_b:
+                del matched[year_b][id_b]
+
     output = []
 
     for name, count in counters.items():
