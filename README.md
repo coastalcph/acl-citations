@@ -1,6 +1,43 @@
 # ACL Citations
 
-## Prerequisites
+This repo contains data and code for the paper:
+
++ Marcel Bollmann and Desmond Elliott (2020). **On Forgetting to Cite Older
+  Papers: An Analysis of the ACL Anthology.** In *Proceedings of ACL2020.*
+
+
+## Dataset
+
+We include three data files that we base our analysis on:
+
++ `acl-parscit.tsv` contains the years of papers cited in the References section
+  of [ACL Anthology](https://www.aclweb.org/anthology) papers.  It is a TSV file
+  with the following columns:
+
+  1. The ACL Anthology ID of the paper we extracted references from.
+  2. The year of publication of that paper.
+  3. A comma-separated list of years of publications for papers in the
+     References section.
+
++ `citations-all.tsv` additionally contains author/title information for each
+  cited paper.  It is a TSV file with one reference entry per line and the
+  following columns:
+
+  1. The ACL Anthology ID of the paper the reference is extracted from.
+  2. The year of publication *of the extracted reference.*
+  3. The author list of the extracted reference.
+  4. The title of the extracted reference.
+
++ `citations-all.matched.tsv` is the result of running `citations-all.tsv`
+  through [our fuzzy-matching algorithm](bin/match_cited_papers.py).
+
+
+## Reproducing the pipeline
+
+To reproduce the full pipeline we used, starting from extracting the citation
+data from PDFs, here are the steps that you need to take.
+
+### Prerequisites
 
 1. Install requirements for Python scripts in this repo:
 
@@ -37,7 +74,7 @@
       `./citeExtract.pl -m extract_all ../demodata/sample2.txt`
 
 
-## Running the pipeline
+### Running the pipeline
 
 1. Download the desired PDF files from the Anthology by specifying their IDs.
    Wildcards `?` and `*` are allowed.  The following would fetch all long and
@@ -74,27 +111,28 @@ years of cited papers in the third column.
 actually running this.
 
 
-## Old instructions using the GROBID pipeline
+## Scripts
 
-To run this using GROBID instead of ParsCit, do the following:
+Here is a brief overview of included scripts.  All scripts will provide the
+`-h/--help` flag to obtain more information about their exact usage.
 
-1. Install GROBID.  The easiest way is via docker:
++ `acl_anthology.py` downloads PDFs from the ACL Anthology based on ID prefixes.
 
-   `docker pull lfoppiano/grobid:0.5.4_1`
++ `find_cited_papers.py` is used to produce `citations-all.tsv` from the parsed
+  ParsCit XML files.
 
-2. Get the following repository as well (should have no additional dependencies):
++ `get_paper_counts.py` is used to obtain the number of publications in the
+  Anthology, by year and publication venue.  (Used to produce Figure 1 in the
+  paper.)
 
-   `git clone https://github.com/kermitt2/grobid-client-python`
++ `match_cited_papers.py` implements the fuzzy-matching algorithm and is used to
+  produce `citations-all.matched.tsv` from the `citations-all.tsv` file.
 
-3. Start the GROBID server (if it's not already running).  Best to do this in a
-   separate terminal:
++ `parse_tei.py` extracts the years of cited papers from the parsed ParsCit XML
+  files.
 
-   `docker run -t --rm --init -p 8080:8070 -p 8081:8071 lfoppiano/grobid:0.5.4_1`
++ `run_parscit_pipeline.sh` is the full extraction pipeline, described above.
 
-4. Run the downloaded PDFs through GROBID:
++ `summarize_logs.py` is a convenience script to get stats about where and how
+  often the extraction process encountered problems.
 
-   `mkdir -p tei/N18`
-
-   `python grobid-client-python/grobid-client.py --input pdf/N18 --output tei/N18 --config config.json processReferences`
-
-Then parse them as above.
