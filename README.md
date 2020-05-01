@@ -29,7 +29,16 @@ We include three data files that we base our analysis on:
   4. The title of the extracted reference.
 
 + `citations-all.matched.tsv` is the result of running `citations-all.tsv`
-  through [our fuzzy-matching algorithm](bin/match_cited_papers.py).
+  through [our fuzzy-matching algorithm](bin/match_cited_papers.py).  It is a
+  TSV file with one reference entry per line and the following columns:
+
+  1. An ID for the extracted reference.
+  2. The number of times this reference was cited in our dataset.
+  3. The year of publication of the extracted reference.
+  4. Its author list.
+  5. Its title.
+  6. A comma-separated list of ACL Anthology IDs of papers that were identified
+     as citing this reference.
 
 
 ## Reproducing the pipeline
