@@ -42,8 +42,9 @@ if __name__ == "__main__":
         idlist = (f"?{year_suffix}-*",)
         counts[year] = len(match_ids(idlist))
 
-    with open(args["--csv"], 'w', newline='') as csvfile:
-        writer = csv.writer(csvfile, delimiter='\t',
-                            quotechar='|', quoting=csv.QUOTE_MINIMAL)
+    with open(args["--csv"], "w", newline="") as csvfile:
+        writer = csv.writer(
+            csvfile, delimiter="\t", quotechar="|", quoting=csv.QUOTE_MINIMAL
+        )
         for year, count in counts.items():
             writer.writerow([year, count])

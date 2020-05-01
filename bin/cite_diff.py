@@ -27,9 +27,10 @@ import os
 
 def parse_csv(filename):
     data = {}
-    with open(filename, 'r', newline='') as csvfile:
-        reader = csv.reader(csvfile, delimiter='\t',
-                            quotechar='|', quoting=csv.QUOTE_MINIMAL)
+    with open(filename, "r", newline="") as csvfile:
+        reader = csv.reader(
+            csvfile, delimiter="\t", quotechar="|", quoting=csv.QUOTE_MINIMAL
+        )
         for row in reader:
             paper_id = row[0]
             cited_years = [] if len(row) < 3 else row[2].split(",")
@@ -65,6 +66,6 @@ if __name__ == "__main__":
             if item in a_list:
                 del a_list[a_list.index(item)]
 
-        a_list = ','.join(a_list) if a_list else "--"
-        b_list = ','.join(b_list) if b_list else "--"
+        a_list = ",".join(a_list) if a_list else "--"
+        b_list = ",".join(b_list) if b_list else "--"
         print(f"{key}\t{a_list}\t{b_list}")

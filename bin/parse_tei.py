@@ -45,12 +45,16 @@ def parse_tei_file(filename):
             if dateitem.get("type") == "published":
                 year = dateitem.get("when")[:4]
                 if not year.isdigit():
-                    log.warning(f"{base}, biblStruct id={item_id}: Date does not appear to contain a year: {dateitem.get('when')}")
+                    log.warning(
+                        f"{base}, biblStruct id={item_id}: Date does not appear to contain a year: {dateitem.get('when')}"
+                    )
                 else:
                     citation_years.append(year)
                     break
         else:
-            log.debug(f"{base}, biblStruct id={item_id}: Could not find a published date; skipping")
+            log.debug(
+                f"{base}, biblStruct id={item_id}: Could not find a published date; skipping"
+            )
     if not citation_years:
         log.error(f"{base}: Could not find any bibliography dates")
     elif len(citation_years) < bibitem_total:
@@ -72,19 +76,27 @@ def parse_parscit(filename):
     bibitem_total = 0
     diff = 0
 
-    for c, bibitem in enumerate(tree.getroot().findall(".//{*}citationList/{*}citation")):
+    for c, bibitem in enumerate(
+        tree.getroot().findall(".//{*}citationList/{*}citation")
+    ):
         bibitem_total += 1
         for dateitem in bibitem.findall(".//{*}date"):
             year = dateitem.text
             if year is None:
-                log.debug(f"{base}, citation {c}: Could not find a published date; skipping")
+                log.debug(
+                    f"{base}, citation {c}: Could not find a published date; skipping"
+                )
             elif not year.isdigit():
-                log.warning(f"{base}, citation {c}: Date does not appear to be a year: {year}")
+                log.warning(
+                    f"{base}, citation {c}: Date does not appear to be a year: {year}"
+                )
             else:
                 citation_years.append(year)
                 break
         else:
-            log.debug(f"{base}, citation {c}: Could not find a published date; skipping")
+            log.debug(
+                f"{base}, citation {c}: Could not find a published date; skipping"
+            )
     if not citation_years:
         log.error(f"{base}: Could not find any bibliography dates")
     elif len(citation_years) < bibitem_total:
@@ -113,7 +125,7 @@ if __name__ == "__main__":
         logzero.logfile(
             args["--log"],
             encoding="utf-8",
-            formatter=logzero.LogFormatter(datefmt="%Y-%m-%d %H:%M:%S", color=False)
+            formatter=logzero.LogFormatter(datefmt="%Y-%m-%d %H:%M:%S", color=False),
         )
 
     if args["--format"] == "grobid":
@@ -144,14 +156,17 @@ if __name__ == "__main__":
         if dir_diff > 0:
             s_entries = "entries" if dir_diff > 1 else "entry"
             s_dirname = os.path.basename(dirname)
-            log.warning(f"{s_dirname}: Could not parse dates for {dir_diff} {s_entries} in {dir_files}/{total_files} files")
+            log.warning(
+                f"{s_dirname}: Could not parse dates for {dir_diff} {s_entries} in {dir_files}/{total_files} files"
+            )
 
     cited_count = sum(len(l) for l in cited_years.values())
     log.info(f"Found {cited_count} references with year.")
 
-    with open(args["--csv"], 'w', newline='') as csvfile:
-        writer = csv.writer(csvfile, delimiter='\t',
-                            quotechar='|', quoting=csv.QUOTE_MINIMAL)
+    with open(args["--csv"], "w", newline="") as csvfile:
+        writer = csv.writer(
+            csvfile, delimiter="\t", quotechar="|", quoting=csv.QUOTE_MINIMAL
+        )
         for file_id, years in cited_years.items():
             pub_year = infer_publication_year(file_id)
-            writer.writerow([file_id, pub_year, ','.join(years)])
+            writer.writerow([file_id, pub_year, ",".join(years)])

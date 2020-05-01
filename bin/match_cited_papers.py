@@ -189,8 +189,10 @@ if __name__ == "__main__":
 
     if args["--join-across-years"]:
         all_years = sorted(list(matched.keys()))
+
         def pairwise(a):
             return list(zip(a[:-1], a[1:]))
+
         for year_a, year_b in tqdm(pairwise(all_years)):
             if int(year_a) + 1 != int(year_b):
                 continue  # only years immediately following each other
@@ -213,9 +215,9 @@ if __name__ == "__main__":
                 str(len(entries)),
                 str(entries[0][1]),
                 entries[0][2],
-                #authors_to_str(entries[0][4]),
+                # authors_to_str(entries[0][4]),
                 entries[0][3],
-                #entries[0][5],
+                # entries[0][5],
                 ",".join(e[0] for e in entries),
             ]
             output.append(row)

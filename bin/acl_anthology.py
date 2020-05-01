@@ -41,20 +41,23 @@ SCRIPTDIR = os.path.dirname(os.path.realpath(__file__))
 def update_acl_repo(repo_dir, force=False):
     from datetime import datetime, timedelta
     from git import Repo
+
     repo_token = os.path.join(repo_dir, ".pulled")
 
     if not os.path.exists(repo_dir):
         os.mkdir(repo_dir)
         log.info("Fetching Anthology metadata...")
         repo = Repo.clone_from(ACL_REPO, repo_dir, branch="master")
-        with open(repo_token, 'a'):
+        with open(repo_token, "a"):
             os.utime(repo_token, None)
         delta = timedelta(hours=0)
     elif os.path.exists(repo_token):
-        delta = datetime.now() - datetime.fromtimestamp(
-            os.path.getmtime(repo_token)
+        delta = datetime.now() - datetime.fromtimestamp(os.path.getmtime(repo_token))
+        log.debug(
+            "Last checked for metadata updates: {} ago".format(
+                ":".join(str(delta).split(":")[:2])
+            )
         )
-        log.debug("Last checked for metadata updates: {} ago".format(":".join(str(delta).split(":")[:2])))
     else:
         delta = timedelta.max
 
@@ -62,7 +65,7 @@ def update_acl_repo(repo_dir, force=False):
     if force or delta > timedelta(hours=24):
         log.info("Checking Anthology metadata for updates...")
         repo.remotes.origin.pull()
-        with open(repo_token, 'a'):
+        with open(repo_token, "a"):
             os.utime(repo_token, None)
     else:
         log.info("Anthology metadata is up-to-date.")
@@ -73,20 +76,24 @@ def build_anthology_id(collection_id, volume_id, paper_id=None):
     Transforms collection id, volume id, and paper id to a width-padded
     Anthology ID. e.g., ('P18', '1', '1') -> P18-1001.
     """
-    if collection_id.startswith('W') or collection_id == 'C69' or (collection_id == 'D19' and int(volume_id) >= 5):
-        anthology_id = f'{collection_id}-{int(volume_id):02d}'
+    if (
+        collection_id.startswith("W")
+        or collection_id == "C69"
+        or (collection_id == "D19" and int(volume_id) >= 5)
+    ):
+        anthology_id = f"{collection_id}-{int(volume_id):02d}"
         if paper_id is not None:
-            anthology_id += f'{int(paper_id):02d}'
+            anthology_id += f"{int(paper_id):02d}"
     else:
-        anthology_id = f'{collection_id}-{int(volume_id):01d}'
+        anthology_id = f"{collection_id}-{int(volume_id):01d}"
         if paper_id is not None:
-            anthology_id += f'{int(paper_id):03d}'
+            anthology_id += f"{int(paper_id):03d}"
 
     return anthology_id
 
 
 def match_ids(ids):
-    map_to_prefix = lambda x: x[:x.find("*")+1] if "*" in x[:3] else x[:3]
+    map_to_prefix = lambda x: x[: x.find("*") + 1] if "*" in x[:3] else x[:3]
     map_to_regex = lambda x: x.replace("?", ".").replace("*", ".+")
 
     id_regex = "|".join(map_to_regex(x) for x in ids)
@@ -101,17 +108,17 @@ def match_ids(ids):
             continue
         log.debug(f"Parsing file: {xmlfile}")
         tree = etree.parse(xmlfile)
-        for volume in tree.getroot().findall('.//volume'):
+        for volume in tree.getroot().findall(".//volume"):
             volume_id = volume.get("id")
-            for paper in volume.findall('.//paper'):
+            for paper in volume.findall(".//paper"):
                 paper_id = paper.get("id")
                 full_id = build_anthology_id(prefix, volume_id, paper_id)
                 if id_pattern.match(full_id) is None:
                     continue
                 log.debug(f"Matched: {full_id}")
-                url = paper.findtext('url')
+                url = paper.findtext("url")
                 if url is None:
-                    url = paper.findtext('pdf')
+                    url = paper.findtext("pdf")
                 if url is None:
                     log.warn(f"Couldn't find PDF for matched entry: {full_id}")
                     continue
@@ -119,7 +126,9 @@ def match_ids(ids):
                     url = ANTHOLOGY_URL.format(full_id)
                 matched.append((full_id, url))
 
-    log.info(f"Found {len(matched)} matching {'entry' if len(matched)==1 else 'entries'}.")
+    log.info(
+        f"Found {len(matched)} matching {'entry' if len(matched)==1 else 'entries'}."
+    )
     return matched
 
 
@@ -151,8 +160,8 @@ def download_ids(ids):
                 progress.write(f"{full_id}: HEAD caused exception '{str(e)}'")
                 time.sleep(5)
                 continue
-            content_type = h.headers.get('content-type')
-            if 'pdf' not in content_type.lower():
+            content_type = h.headers.get("content-type")
+            if "pdf" not in content_type.lower():
                 progress.write(f"{url} is not a PDF file (got: {content_type})")
                 break
             else:
@@ -163,7 +172,7 @@ def download_ids(ids):
                     time.sleep(5)
                     continue
                 if r.status_code == requests.codes.ok:
-                    with open(local_file, 'wb') as f:
+                    with open(local_file, "wb") as f:
                         f.write(r.content)
                     break
                 else:
@@ -171,7 +180,7 @@ def download_ids(ids):
         else:
             progress.write(f"{full_id}: giving up")
         progress.update()
-        #if (i+1) % 50 == 0:
+        # if (i+1) % 50 == 0:
         #    tqdm.write(f"Downloaded {i+1:4d} files -- pausing for 10 seconds")
         #    time.sleep(10)
     progress.close()
