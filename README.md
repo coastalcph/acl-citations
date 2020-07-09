@@ -2,9 +2,12 @@
 
 This repo contains data and code for the paper:
 
-+ Marcel Bollmann and Desmond Elliott (2020). **On Forgetting to Cite Older
-  Papers: An Analysis of the ACL Anthology.** In *Proceedings of ACL2020.*
++ Marcel Bollmann and Desmond Elliott (2020). [**On Forgetting to Cite Older
+  Papers: An Analysis of the ACL Anthology.**](https://www.aclweb.org/anthology/2020.acl-main.699/)
+  In *Proceedings of ACL2020.*
 
+Please use the [official ACL Anthology BibTeX entry](https://www.aclweb.org/anthology/2020.acl-main.699.bib)
+to cite this paper, e.g. when you use our dataset.
 
 ## Dataset
 
