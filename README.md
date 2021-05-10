@@ -9,6 +9,8 @@ This repo contains data and code for the paper:
 Please use the [official ACL Anthology BibTeX entry](https://www.aclweb.org/anthology/2020.acl-main.699.bib)
 to cite this paper, e.g. when you use our dataset.
 
+In addition to this repo, we also published [an archive with the extracted text files and ParsCit XML files](https://erda.ku.dk/archives/9bf4b9e5821a79d63e417207dc59aa2e/published-archive.html) generated as part of our experimental pipeline (see below).
+
 ## Dataset
 
 We include three data files that we base our analysis on:
