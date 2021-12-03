@@ -34,7 +34,7 @@ from tqdm import tqdm
 
 
 ACL_REPO = "https://github.com/acl-org/acl-anthology"
-ANTHOLOGY_URL = "https://www.aclweb.org/anthology/{}.pdf"
+ANTHOLOGY_URL = "https://aclanthology.org/{}.pdf"
 SCRIPTDIR = os.path.dirname(os.path.realpath(__file__))
 
 
