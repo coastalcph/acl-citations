@@ -84,6 +84,10 @@ def build_anthology_id(collection_id, volume_id, paper_id=None):
         anthology_id = f"{collection_id}-{int(volume_id):02d}"
         if paper_id is not None:
             anthology_id += f"{int(paper_id):02d}"
+    elif collection_id.startswith("2"):
+        anthology_id = f"{collection_id}-{volume_id}"
+        if paper_id is not None:
+            anthology_id += f".{paper_id}"
     else:
         anthology_id = f"{collection_id}-{int(volume_id):01d}"
         if paper_id is not None:
@@ -103,7 +107,7 @@ def match_ids(ids):
 
     matched = []
     for xmlfile in glob(f"{SCRIPTDIR}/.anthology-repo/data/xml/*.xml"):
-        prefix = os.path.basename(xmlfile)[:3]
+        prefix, _ = os.path.splitext(os.path.basename(xmlfile))
         if file_pattern.match(prefix) is None:
             continue
         log.debug(f"Parsing file: {xmlfile}")
